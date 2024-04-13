@@ -52,10 +52,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                 isScrollControlled: true,
                 context: context,
                 builder: (context) {
-                  return ChangeNotifierProvider<TaskProvider>(
-                    create: (context) => TaskProvider(),
-                    child: const AddTask(),
-                  );
+                  return const AddTask();
                 });
           },
           child: const Icon(Icons.add),
