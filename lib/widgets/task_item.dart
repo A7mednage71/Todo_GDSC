@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/models/task_model.dart';
+import 'package:todo_app/provider/task_provider.dart';
 import 'package:todo_app/res/app_colors.dart';
 import 'package:todo_app/res/text_style.dart';
 import 'package:todo_app/screens/task_edit.dart';
 import 'package:todo_app/widgets/showdialog.dart';
 
 class TaskItem extends StatefulWidget {
-  const TaskItem({super.key});
-
+  const TaskItem({super.key, required this.taskModel});
+  final TaskModel taskModel;
   @override
   State<TaskItem> createState() => _TaskItemState();
 }
@@ -16,8 +19,9 @@ class _TaskItemState extends State<TaskItem> {
   bool isDone = false;
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<TaskProvider>(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 40),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Slidable(
         startActionPane: ActionPane(
             motion: const ScrollMotion(),
@@ -33,7 +37,10 @@ class _TaskItemState extends State<TaskItem> {
                         cancelonPress: () {
                           Navigator.of(context).pop();
                         },
-                        oKonPress: () {},
+                        oKonPress: () {
+                          provider.deleteTask(model: widget.taskModel);
+                          Navigator.of(context).pop();
+                        },
                       );
                     },
                   );
@@ -72,11 +79,14 @@ class _TaskItemState extends State<TaskItem> {
               Column(
                 children: [
                   Text(
-                    "Task",
+                    widget.taskModel.description,
                     style: poppins18Bold(),
                   ),
-                  const Row(
-                    children: [Icon(Icons.lock_clock), Text("10:30 AM")],
+                  Row(
+                    children: [
+                      const Icon(Icons.lock_clock),
+                      Text(widget.taskModel.time),
+                    ],
                   )
                 ],
               ),

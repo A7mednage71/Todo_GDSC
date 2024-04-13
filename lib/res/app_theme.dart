@@ -12,15 +12,11 @@ final lightMode = ThemeData(
     bodyMedium: poppins18Bold(),
     bodySmall: poppins14Bold(),
   ),
-  appBarTheme: const AppBarTheme(
-    color: AppColors.blue,
-    toolbarHeight: 110
-  ),
- bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-   backgroundColor: Colors.transparent,
-   elevation: 0,
-   selectedItemColor: AppColors.blue
- ),
+  appBarTheme: const AppBarTheme(color: AppColors.blue, toolbarHeight: 110),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      selectedItemColor: AppColors.blue),
 );
 
 final darkMode = ThemeData(
@@ -31,13 +27,9 @@ final darkMode = ThemeData(
     bodyMedium: poppins18Bold(),
     bodySmall: poppins14Bold(),
   ),
-  appBarTheme: const AppBarTheme(
-      color: AppColors.blue,
-      toolbarHeight: 110
-  ),
+  appBarTheme: const AppBarTheme(color: AppColors.blue, toolbarHeight: 110),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      selectedItemColor: AppColors.blue
-  ),
+      selectedItemColor: AppColors.blue),
 );

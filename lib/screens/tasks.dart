@@ -4,6 +4,8 @@ import 'package:flutter_timeline_calendar/timeline/model/day_options.dart';
 import 'package:flutter_timeline_calendar/timeline/model/headers_options.dart';
 import 'package:flutter_timeline_calendar/timeline/utils/calendar_types.dart';
 import 'package:flutter_timeline_calendar/timeline/widget/timeline_calendar.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/provider/task_provider.dart';
 import 'package:todo_app/widgets/task_item.dart';
 
 class TasksScreen extends StatelessWidget {
@@ -16,11 +18,17 @@ class TasksScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('To Do List'),
         ),
-        body: const Column(
-          children: [
-            Calender(),
-            TaskItem(),
-          ],
+        body: Consumer<TaskProvider>(
+          builder: (context, taskProvider, child) {
+            return ListView.builder(
+              itemCount: taskProvider.tasks.length,
+              itemBuilder: (context, index) {
+                return TaskItem(
+                  taskModel: taskProvider.tasks[index],
+                );
+              },
+            );
+          },
         ),
       ),
     );
@@ -45,9 +53,10 @@ class Calender extends StatelessWidget {
         headerMonthBackColor: Colors.transparent,
       ),
       dayOptions: DayOptions(
-          compactMode: true,
-          weekDaySelectedColor: const Color(0xff3AC3E2),
-          disableDaysBeforeNow: true),
+        compactMode: true,
+        weekDaySelectedColor: const Color(0xff3AC3E2),
+        disableDaysBeforeNow: true,
+      ),
       headerOptions: HeaderOptions(
           weekDayStringType: WeekDayStringTypes.SHORT,
           monthStringType: MonthStringTypes.FULL,
@@ -56,8 +65,6 @@ class Calender extends StatelessWidget {
       onChangeDateTime: (datetime) {
         print(datetime.getDate());
       },
-      
     );
-    
   }
 }

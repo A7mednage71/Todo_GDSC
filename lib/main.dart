@@ -2,16 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/provider/my_app_provider.dart';
+import 'package:todo_app/provider/task_provider.dart';
 import 'package:todo_app/res/app_theme.dart';
 import 'package:todo_app/screens/home_layout.dart';
 import 'package:todo_app/screens/task_edit.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
 
-void main() {
-  runApp(ChangeNotifierProvider(
-    create: (context) => MyAppProvider(),
-    child: const MyApp(),
-  ));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Hive.initFlutter();
+  Hive.registerAdapter(TaskModelAdapter());
+  await Hive.openBox<TaskModel>("TASK_BOX");
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => MyAppProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TaskProvider()..getAlltasks(),
+        )
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
