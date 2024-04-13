@@ -1,9 +1,9 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todo_app/res/app_colors.dart';
 import 'package:todo_app/res/text_style.dart';
 import 'package:todo_app/screens/task_edit.dart';
+import 'package:todo_app/widgets/showdialog.dart';
 
 class TaskItem extends StatefulWidget {
   const TaskItem({super.key});
@@ -25,21 +25,18 @@ class _TaskItemState extends State<TaskItem> {
             children: [
               SlidableAction(
                 onPressed: (context) {
-                  AwesomeDialog(
-                      context: context,
-                      dialogType: DialogType.question,
-                      animType: AnimType.rightSlide,
-                      title: 'Delete',
-                      desc: 'Do you want to delete this task',
-                      btnCancelOnPress: () {
-                        if (Navigator.canPop(context)) {
-                        Navigator.pop(context);
-                        }
-                      },
-                  btnOkOnPress: () {
-
-                  },
-                  ).show();
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialogWidget(
+                        text: 'are you sure you want to delete this task?',
+                        cancelonPress: () {
+                          Navigator.of(context).pop();
+                        },
+                        oKonPress: () {},
+                      );
+                    },
+                  );
                 },
                 icon: Icons.delete,
                 label: 'Delete',
@@ -70,7 +67,7 @@ class _TaskItemState extends State<TaskItem> {
                 width: 6,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    color: isDone ?  AppColors.lightGreen : AppColors.blue),
+                    color: isDone ? AppColors.lightGreen : AppColors.blue),
               ),
               Column(
                 children: [
@@ -84,32 +81,39 @@ class _TaskItemState extends State<TaskItem> {
                 ],
               ),
               const Spacer(),
-              if(isDone == false)
-              Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: InkWell(
-                  onTap: (){
-                    setState(() {
-                    isDone = true;
-                    });
-                  },
-                  child: Container(
-                    width: 69,
-                    height: 34,
-                    decoration: BoxDecoration(
+              if (isDone == false)
+                Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        isDone = true;
+                      });
+                    },
+                    child: Container(
+                      width: 69,
+                      height: 34,
+                      decoration: BoxDecoration(
                         color: AppColors.blue,
-                        borderRadius: BorderRadius.circular(10),),
-                    child: const Icon(
-                      Icons.done,
-                      color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Icon(
+                        Icons.done,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                ),
-              )
+                )
               else
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 42,),
-                  child: Text("Done!", style: poppins22Bold(),),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 30,
+                    vertical: 42,
+                  ),
+                  child: Text(
+                    "Done!",
+                    style: poppins22Bold(),
+                  ),
                 )
             ],
           ),

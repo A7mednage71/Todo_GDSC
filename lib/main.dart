@@ -9,7 +9,9 @@ import 'package:todo_app/screens/task_edit.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
-      create: (context) => MyAppProvider(), child: const MyApp()));
+    create: (context) => MyAppProvider(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -37,7 +39,7 @@ class _MyAppState extends State<MyApp> {
       locale: Locale(provider.language),
       home: const HomeLayout(),
       routes: {
-        TaskEdit.routeName : (context) => const TaskEdit(),
+        TaskEdit.routeName: (context) => const TaskEdit(),
       },
     );
   }
@@ -45,7 +47,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> getPreferences() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? language = prefs.getString('language');
-    provider.changeLanguage(language!);
+    // provider.changeLanguage(language!);
     if (prefs.getString('theme') == 'dark') {
       provider.changeTheme(ThemeMode.dark);
     } else if (prefs.getString('theme') == 'system') {
