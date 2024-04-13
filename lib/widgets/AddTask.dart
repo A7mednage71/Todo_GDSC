@@ -76,7 +76,6 @@ class _AddTaskState extends State<AddTask> {
               onPressed: () {
                 if (key.currentState!.validate()) {
                   key.currentState!.save();
-
                   var newtask = TaskModel(
                     title: "",
                     description: task!,

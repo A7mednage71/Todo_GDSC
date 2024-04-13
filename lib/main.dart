@@ -25,7 +25,7 @@ void main() async {
           create: (context) => MyAppProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => TaskProvider()..getAlltasks(),
+          create: (context) => TaskProvider(),
         )
       ],
       child: const MyApp(),

@@ -5,11 +5,12 @@ import 'package:flutter_timeline_calendar/timeline/model/headers_options.dart';
 import 'package:flutter_timeline_calendar/timeline/utils/calendar_types.dart';
 import 'package:flutter_timeline_calendar/timeline/widget/timeline_calendar.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/provider/task_provider.dart';
 import 'package:todo_app/widgets/task_item.dart';
 
 class TasksScreen extends StatelessWidget {
-  const TasksScreen({super.key});
+  const TasksScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +20,13 @@ class TasksScreen extends StatelessWidget {
           title: const Text('To Do List'),
         ),
         body: Consumer<TaskProvider>(
-          builder: (context, taskProvider, child) {
+          builder: (context, provider, child) {
+            List<TaskModel> tasks =  provider.getAlltasks();
             return ListView.builder(
-              itemCount: taskProvider.tasks.length,
+              itemCount: tasks.length,
               itemBuilder: (context, index) {
                 return TaskItem(
-                  taskModel: taskProvider.tasks[index],
+                  taskModel: tasks[index],
                 );
               },
             );

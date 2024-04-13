@@ -4,22 +4,19 @@ import 'package:todo_app/models/task_model.dart';
 
 class TaskProvider extends ChangeNotifier {
   var tasksBox = Hive.box<TaskModel>("TASK_BOX");
-  List<TaskModel> tasks = [];
 
-  void addTask({required TaskModel model}) {
-    tasksBox.add(model);
-    tasks = tasksBox.values.toList();
+  Future<void> addTask({required TaskModel model}) async {
+    await tasksBox.add(model);
     notifyListeners();
   }
 
-  void deleteTask({required TaskModel model}) {
-    model.delete();
-    tasks = tasksBox.values.toList();
+  Future<void> deleteTask({required TaskModel model}) async {
+    await model.delete();
     notifyListeners();
   }
 
-  void getAlltasks() {
-    tasks = tasksBox.values.toList();
-    notifyListeners();
+  getAlltasks() {
+    List<TaskModel> tasks = tasksBox.values.toList();
+    return tasks;
   }
 }
